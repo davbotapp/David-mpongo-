@@ -1,33 +1,40 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="google-site-verification" content="YvfIvLYwUp-8q6YSySsEBCG2iuqVcRpz8kEAY4XLDfM" />
+      <meta name="google-site-verification" content="YvfIvLYwUp-8q6YSySsEBCG2iuqVcRpz8kEAY4XLDfM" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>David Mpongo</title>
-  
-  <link rel="icon" href="https://i.imgur.com/naY3qiQ.jpeg" type="image/ico">
-  <link rel="shortcut icon" href="https://i.imgur.com/naY3qiQ.jpeg">
-  <link rel="icon" href="https://i.imgur.com/naY3qiQ.jpeg" type="image/x-icon">
-  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/naY3qiQ.jpeg">
- 
+
+  <link rel="icon" href="https://i.imgur.com/naY3qiQ.jpeg" type="image/jpeg" />
+
   <style>
     body {
-      background-color: #121212;
+      background-color: #0d0d0d;
       color: #fff;
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
     }
+
     header {
-      background-color: #e74c3c;
+      background-color: #005f7f;
       padding: 20px;
       text-align: center;
     }
-    header h1 {
-      margin: 0;
+
+    #title span {
+      opacity: 0;
+      display: inline-block;
+      animation: appear 0.05s forwards;
     }
+
+    @keyframes appear {
+      to {
+        opacity: 1;
+      }
+    }
+
     .profile {
       text-align: center;
       margin: 20px;
@@ -37,95 +44,127 @@
       height: 150px;
       object-fit: cover;
       border-radius: 50%;
-      border: 4px solid #e74c3c;
+      border: 4px solid #00cfff;
     }
+
+  
     section {
       max-width: 700px;
       margin: auto;
       padding: 20px;
     }
+
     h2 {
-      color: #e74c3c;
+      color: #00cfff;
     }
+
     .card {
-      background-color: #1e1e1e;
+      background-color: #1a1a1a;
       padding: 20px;
       border-radius: 8px;
       margin-bottom: 20px;
     }
+
     form input, form textarea, form button {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
       border: none;
- border-radius: 5px;
+      border-radius: 5px;
       font-size: 1em;
     }
+
     form input, form textarea {
       background-color: #2c2c2c;
       color: #fff;
     }
+
     form button {
-      background-color: #e74c3c;
+      background-color: #00cfff;
       color: white;
       cursor: pointer;
     }
+
     footer {
       text-align: center;
       padding: 15px;
-      background-color: #1a1a1a;
-      color: #aaa;
+      background-color: #111;
+      color: #aaa;}
+    .btn {
+      background-color: #0077cc;
+      color: white;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background-color: #005fa3;
     }
   </style>
 </head>
 <body>
-
   <header>
-    <h1>David Mpongo</h1>
+    <h1 id="title"></h1>
   </header>
-
   <div class="profile">
-    <!-- Remplace "photo.jpg" par le nom de ton image -->
     <img src="https://i.imgur.com/naY3qiQ.jpeg" alt="Ma photo de profil">
   </div>
+ 
+  <h1>Choisissez une page</h1>
 
+  <div class="btn-container">
+    <a href="https://portfolio-david-mpongo-chi.vercel.app/" class="btn">Portfolio</a>
+    <a href="https://portfolio-david-mpongo-chi.vercel.app/service.html@" class="btn">entreprise</a>
+    <a href="https://davbot-premium.vercel.app/" class="btn">download apk</a>
+  </div>
   <section>
     <div class="card">
       <h2>À propos de moi</h2>
-    mon portfolio : <a href="https://portfolio-david-mpongo-chi.vercel.app/">https://portfolio-david-mpongo-chi.vercel.app/</a>
       <p>
-
-Je suis DAVID MPONGO, un jeune développeur web et mobile, âgé de 17 ans, fièrement originaire de la République Démocratique du Congo.</p>
-
-<p>Passionné par la création numérique, je me spécialise dans la conception de sites web modernes et intuitifs, le développement d'applications mobiles Android (APK) robustes et l'exploration prometteuse du monde de l'intelligence artificielle. Chaque ligne de code que j'écris est motivée par le désir de transformer des idées complexes en solutions numériques concrètes et innovantes.</p>
-<p>
-Mon parcours est marqué par une soif insatiable de connaissances, reflétée par ma passion pour l'information. Étonnamment, mes études de latiniste m'ont inculqué une rigueur de pensée, une logique implacable et une capacité d'analyse qui sont des atouts précieux dans l'univers du développement et de l'IA. Cette approche méthodique, combinée à ma jeunesse et à ma curiosité, me permet d'aborder chaque projet avec une perspective fraîche et une détermination sans faille.</p>
-<p>
-Je suis constamment à la recherche de nouveaux défis et opportunités pour apprendre, créer et collaborer. N'hésitez pas à parcourir mes projets pour découvrir l'étendue de mes compétences ou à me contacter pour discuter de vos idées. Je suis prêt à relever de nouveaux défis et à contribuer à des projets innovants !</p>
+        Je suis DAVID MPONGO, un jeune développeur web et mobile, âgé de 17 ans, fièrement originaire de la République Démocratique du Congo.
+      </p>
+      <p>
+        Passionné par la création numérique, je me spécialise dans la conception de sites web modernes, le développement d'applications Android (APK), et l’exploration de l'intelligence artificielle et VPN connexion gratuite
+      </p>
     </div>
-
     <div class="card">
       <h2>Contactez-moi</h2>
       <form onsubmit="envoyerMessage(event)">
-        <input type="text" placeholder="Votre nom" required>
-        <input type="email" placeholder="Votre email" required>
-        <textarea rows="5" placeholder="Votre message" required></textarea>
-        <button type="submit">Envoyer</button>
+        <input type="text" id="nom" placeholder="Votre nom" required>
+        <input type="email" id="email" placeholder="Votre email" required>
+        <textarea id="message" rows="5" placeholder="Votre message" required></textarea>
+        <button type="submit">Envoyer via WhatsApp</button>
       </form>
     </div>
- </section>
-
+  </section>
   <footer>
     &copy; 2025 David Mpongo — Tous droits réservés
   </footer>
-
   <script>
+    // Animation lettre par lettre
+    const titleText = "David-Mpongo";
+    const titleEl = document.getElementById('title');
+    for (let i = 0; i < titleText.length; i++) {
+      const span = document.createElement('span');
+      span.textContent = titleText[i];
+      span.style.animationDelay = (i * 0.1) + 's';
+      titleEl.appendChild(span);
+    }
+    // Formulaire WhatsApp
     function envoyerMessage(e) {
       e.preventDefault();
-      alert("Merci ! Votre message a été envoyé.");
-      e.target.reset();
+      const nom = document.getElementById("nom").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const text = `💬 Nouveau message via le site :\n\n👤 Nom : ${nom}📧 Email :${email}\n📝 Message : ${message}`;
+      const phone = "243846064543";
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank");
     }
   </script>
-
 </body>
 </html>
