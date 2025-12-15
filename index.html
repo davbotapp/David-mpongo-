@@ -3,66 +3,185 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Portfolio de David Mpongo - Développeur web et mobile, applications Android, VPN et IA.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David Mpongo | Développeur Web & Mobile - Startup</title>
+<meta name="description" content="David Mpongo, développeur web et mobile. Création de sites modernes, applications Android, solutions VPN et IA. Version Business / Startup.">
 <meta property="og:title" content="David Mpongo | Développeur Web & Mobile">
-<meta property="og:description" content="Découvrez mes projets, compétences et boutique VPN.">
+<meta property="og:description" content="Portfolio professionnel, projets, services et solutions digitales.">
 <meta property="og:image" content="https://i.imgur.com/naY3qiQ.jpeg">
-<meta name="google-site-verification" content="YvfIvLYwUp-8q6YSySsEBCG2iuqVcRpz8kEAY4XLDfM">
-<title>David Mpongo | Développeur Web & Mobile</title>
 
-<link rel="icon" href="https://i.imgur.com/naY3qiQ.jpeg" type="image/jpeg">
+<link rel="icon" href="https://i.imgur.com/naY3qiQ.jpeg">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-:root {
-  --bg:#0d0d0d; --card:#1a1a1a; --text:#fff;
-  --accent:#00cfff; --btn:#0077cc;
+:root{
+  --bg:#0b0f14;
+  --card:#151b23;
+  --text:#eaeaea;
+  --muted:#a0a0a0;
+  --accent:#00cfff;
+  --btn:#0077cc;
 }
-body.light {--bg:#f4f4f4;--card:#fff;--text:#111;--accent:#0077cc;--btn:#005fa3;}
-
+body.light{
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --text:#111;
+  --muted:#555;
+  --accent:#0066cc;
+  --btn:#0052a3;
+}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-body{background:var(--bg);color:var(--text);transition:.3s;}
-header{background:linear-gradient(135deg,#005f7f,var(--accent));padding:50px 20px;text-align:center;position:relative;}
-.theme-toggle{position:absolute;top:15px;right:20px;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;}
-#title span{opacity:0;display:inline-block;animation:appear .4s forwards;}
-@keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.profile{text-align:center;margin-top:-60px;}
-.profile img{width:150px;height:150px;border-radius:50%;border:5px solid var(--accent);}
-.container{max-width:900px;margin:auto;padding:30px 20px;}
-.page-title{text-align:center;margin-bottom:25px;font-size:1.7rem;}
-.btn-container{display:flex;flex-wrap:wrap;gap:15px;justify-content:center;margin-bottom:40px;}
-.btn{background:var(--btn);color:#fff;padding:14px 26px;border-radius:12px;text-decoration:none;font-weight:600;display:flex;align-items:center;gap:10px;transition:.3s;}
-.btn:hover{transform:translateY(-3px);opacity:.9;}
-.card{background:var(--card);padding:25px;border-radius:15px;margin-bottom:25px;box-shadow:0 10px 20px rgba(0,0,0,.15);}
-.card h2{color:var(--accent);margin-bottom:10px;}
-.skill{margin:12px 0;} 
-.skill span{font-weight:600;} 
-.bar{background:#333;border-radius:20px;overflow:hidden;margin-top:6px;}
-.fill{height:10px;background:var(--accent);}
-form input,form textarea,form button{width:100%;padding:12px;margin-top:12px;border:none;border-radius:8px;font-size:1em;}
-form input,form textarea{background:#2c2c2c;color:#fff;}
-body.light form input,body.light textarea{background:#eee;color:#000;}
-form button{background:var(--accent);font-weight:bold;cursor:pointer;}
-footer{text-align:center;padding:20px;background:#111;color:#aaa;margin-top:40px;}
-@media(max-width:600px){.btn{width:100%;justify-content:center;}}
+body{background:var(--bg);color:var(--text);transition:.3s;line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
 
-.project-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:20px;}
-.project-gallery img{width:100%;border-radius:10px;transition:.3s;cursor:pointer;}
-.project-gallery img:hover{transform:scale(1.05);}
-.testimonial{background:var(--card);padding:20px;border-radius:12px;margin-bottom:20px;box-shadow:0 5px 15px rgba(0,0,0,.1);}
-.counter{font-size:2rem;font-weight:bold;text-align:center;margin:10px 0;color:var(--accent);}
-.lang-toggle{position:absolute;top:15px;left:20px;background:none;border:none;color:#fff;font-size:18px;cursor:pointer;}
+/* ===== HEADER HERO ===== */
+header{
+  padding:100px 20px 160px;
+  background:linear-gradient(135deg,#003f5f,var(--accent));
+  text-align:center;
+  position:relative;
+}
+header h1{font-size:3rem;font-weight:700;opacity:0;animation:fadeInDown 1s forwards;}
+header p{margin-top:15px;color:#eaf6ff;font-size:1.2rem;max-width:600px;margin:auto;opacity:0;animation:fadeInDown 1s 0.3s forwards;}
+header .cta-btn{
+  margin-top:30px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:#fff;color:var(--accent);
+  padding:15px 30px;
+  border-radius:12px;
+  font-weight:700;
+  transition:.3s;
+  opacity:0;
+  animation:fadeInDown 1s 0.6s forwards;
+}
+header .cta-btn:hover{transform:translateY(-3px);opacity:.9;}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+
+.theme-toggle,.lang-toggle{
+  position:absolute;
+  top:25px;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+}
+.theme-toggle{right:20px;}
+.lang-toggle{left:20px;}
+
+/* ===== PROFILE ===== */
+.profile{margin-top:-80px;text-align:center;}
+.profile img{width:160px;height:160px;border-radius:50%;border:5px solid var(--accent);background:#000;}
+
+/* ===== CONTAINER ===== */
+.container{max-width:1100px;margin:auto;padding:50px 20px;}
+.section-title{text-align:center;font-size:2rem;margin-bottom:40px;color:var(--accent);}
+
+/* ===== BUTTONS ===== */
+.btn-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  margin-bottom:60px;
+}
+.btn{
+  background:var(--btn);
+  color:#fff;
+  padding:16px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  transition:.3s;
+}
+.btn:hover{transform:translateY(-4px);opacity:.9;}
+
+/* ===== CARD ===== */
+.card{
+  background:var(--card);
+  padding:35px;
+  border-radius:20px;
+  margin-bottom:40px;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+}
+.card h2{margin-bottom:20px;color:var(--accent);}
+.card p{color:var(--muted);}
+
+/* ===== SKILLS ===== */
+.skill{margin:15px 0;}
+.skill span{font-weight:600;}
+.bar{background:#2a2f36;border-radius:30px;overflow:hidden;margin-top:8px;}
+.fill{height:12px;background:linear-gradient(90deg,var(--accent),#00ffaa);transition:width 1s;}
+
+/* ===== SERVICES / PROJETS / TESTIMONIALS ===== */
+.services,.projects,.testimonials{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+}
+.service,.project,.testimonial{
+  background:var(--card);
+  padding:25px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 15px 30px rgba(0,0,0,.15);
+  transition:.3s;
+}
+.service:hover,.project:hover,.testimonial:hover{transform:translateY(-5px);}
+.service i,.project i,.testimonial i{font-size:28px;color:var(--accent);margin-bottom:15px;}
+
+/* ===== STATISTICS ===== */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  text-align:center;
+  gap:30px;
+  margin-top:30px;
+}
+.counter{font-size:2rem;font-weight:bold;color:var(--accent);}
+
+/* ===== FORMS ===== */
+form input,form textarea,form button{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border:none;
+  border-radius:10px;
+  font-size:1em;
+}
+form input,form textarea{background:#2c2f36;color:#fff;}
+body.light form input,body.light textarea{background:#eee;color:#000;}
+form button{background:var(--accent);font-weight:700;cursor:pointer;}
+
+/* ===== FOOTER ===== */
+footer{text-align:center;padding:30px;background:#0a0d12;color:#777;font-size:.9rem;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){header h1{font-size:2rem;}}
 </style>
 </head>
 
 <body>
 
 <header>
-  <button class="lang-toggle" onclick="toggleLang()"><i class="fas fa-language"></i></button>
+  <button class="lang-toggle"><i class="fas fa-language"></i></button>
   <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
-  <h1 id="title"></h1>
+  <h1>David Mpongo</h1>
+  <p>Développeur Web • Mobile • IA • VPN | Solutions professionnelles</p>
+  <a href="#contact" class="cta-btn"><i class="fas fa-envelope"></i> Contactez-moi</a>
+  
+  <a href="https://chat.whatsapp.com/IpOMwdgWmIH0GNksU4FUJn" class="cta-btn"><i class="fas fa-envelope"></i> rejoindre la communauté</a>
 </header>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
 
 <div class="profile">
   <img src="https://i.imgur.com/naY3qiQ.jpeg" alt="David Mpongo">
@@ -70,8 +189,7 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;margin-top:40px
 
 <div class="container">
 
-<h2 class="page-title">Choisissez une page</h2>
-
+<h2 class="section-title">Navigation rapide</h2>
 <div class="btn-container">
   <a href="https://portfolio-david-mpongo-chi.vercel.app/" class="btn"><i class="fas fa-briefcase"></i> Portfolio</a>
   <a href="https://portfolio-david-mpongo-chi.vercel.app/service.html" class="btn"><i class="fas fa-cogs"></i> Services</a>
@@ -80,13 +198,12 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;margin-top:40px
 </div>
 
 <div class="card">
-<h2><i class="fas fa-user"></i> À propos de moi</h2>
-<p>Je suis <strong>David Mpongo</strong>, développeur web et mobile de 17 ans, originaire de la RDC.</p>
-<p>Je crée des sites modernes, applications Android, solutions VPN et projets liés à l’IA.</p>
+<h2>À propos</h2>
+<p>Je suis <strong>David Mpongo</strong>, développeur web et mobile basé en RDC. Je crée des sites modernes, applications Android, solutions VPN sécurisées et projets basés sur l’intelligence artificielle pour entreprises et startups.</p>
 </div>
 
 <div class="card">
-<h2><i class="fas fa-code"></i> Compétences</h2>
+<h2>Compétences</h2>
 <div class="skill"><span>HTML / CSS</span><div class="bar"><div class="fill" style="width:90%"></div></div></div>
 <div class="skill"><span>JavaScript</span><div class="bar"><div class="fill" style="width:85%"></div></div></div>
 <div class="skill"><span>Android (APK)</span><div class="bar"><div class="fill" style="width:75%"></div></div></div>
@@ -94,22 +211,54 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;margin-top:40px
 <div class="skill"><span>VPN / Réseaux</span><div class="bar"><div class="fill" style="width:85%"></div></div></div>
 </div>
 
-
-
-
 <div class="card">
-<h2><i class="fas fa-user-shield"></i> Espace client</h2>
-<p>Connexion simulée : <strong>Utilisateur / Mot de passe</strong></p>
-<form onsubmit="alert('Connexion simulée !'); return false;">
-<input type="text" placeholder="Utilisateur" required>
-<input type="password" placeholder="Mot de passe" required>
-<button>Connexion</button>
-</form>
+<h2>Services</h2>
+<div class="services">
+  <div class="service"><i class="fas fa-globe"></i><p>Sites web modernes</p></div>
+  <div class="service"><i class="fab fa-android"></i><p>Applications Android</p></div>
+  <div class="service"><i class="fas fa-robot"></i><p>Solutions IA & API</p></div>
+  <div class="service"><i class="fas fa-shield-alt"></i><p>VPN & sécurité</p></div>
+</div>
 </div>
 
 <div class="card">
-<h2><i class="fas fa-envelope"></i> Contact</h2>
-<form onsubmit="envoyerMessage(event)">
+<h2>Projets récents</h2>
+<div class="projects">
+  <div class="project"><i class="fas fa-laptop-code"></i><p>Portfolio Web</p></div>
+  <div class="project"><i class="fas fa-mobile-alt"></i><p>App Android DavBot</p></div>
+  <div class="project"><i class="fas fa-shield-alt"></i><p>VPN sécurisé</p></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Témoignages</h2>
+<div class="testimonials">
+  <div class="testimonial"><i class="fas fa-quote-left"></i><p>"Travail sérieux et rapide, David a modernisé notre site."</p></div>
+  <div class="testimonial"><i class="fas fa-quote-left"></i><p>"Application Android fiable et intuitive, très satisfait."</p></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Statistiques</h2>
+<div class="stats">
+  <div>
+    <div class="counter" data-target="28">0</div>
+    <p>Projets</p>
+  </div>
+  <div>
+    <div class="counter" data-target="17">0</div>
+    <p>Clients</p>
+  </div>
+  <div>
+    <div class="counter" data-target="500">0</div>
+    <p>Visiteurs</p>
+  </div>
+</div>
+</div>
+
+<div class="card" id="contact">
+<h2>Contact / Consultation</h2>
+<form onsubmit="sendWhatsApp(event)">
 <input id="nom" placeholder="Votre nom" required>
 <input id="email" type="email" placeholder="Votre email" required>
 <textarea id="message" rows="5" placeholder="Votre message" required></textarea>
@@ -117,34 +266,36 @@ footer{text-align:center;padding:20px;background:#111;color:#aaa;margin-top:40px
 </form>
 </div>
 
-<div class="card">
-<h2><i class="fas fa-chart-line"></i> Statistiques</h2>
-<p>Visiteurs simulés :</p>
-<div class="counter" id="counter">0</div>
 </div>
 
-</div>
-
-<footer>© 2025 David Mpongo — Tous droits réservés</footer>
+<footer>© 2025 David Mpongo — Développeur Web & Mobile | Version Business / Startup</footer>
 
 <script>
-const titleText="David Mpongo";
-const title=document.getElementById("title");
-[...titleText].forEach((l,i)=>{const s=document.createElement("span");s.textContent=l;s.style.animationDelay=i*.1+"s";title.appendChild(s);});
-
+// Theme
 function toggleTheme(){document.body.classList.toggle("light");}
-function toggleLang(){alert("Langue basique : FR / EN");}
 
-function envoyerMessage(e){
-e.preventDefault();
-const txt=`Nom:${nom.value}\nEmail:${email.value}\nMessage:${message.value}`;
-window.open(`https://wa.me/243846064543?text=${encodeURIComponent(txt)}`,"_blank");
+// WhatsApp
+function sendWhatsApp(e){
+  e.preventDefault();
+  const txt=`Nom: ${nom.value}\nEmail: ${email.value}\nMessage: ${message.value}`;
+  window.open(`https://wa.me/243846064543?text=${encodeURIComponent(txt)}`);
 }
 
-// Compteur visiteurs simulé
-let count=0;
-setInterval(()=>{count++;document.getElementById("counter").textContent=count;},500);
+// Counter animation
+const counters = document.querySelectorAll('.counter');
+counters.forEach(counter => {
+  const updateCount = () => {
+    const target = +counter.getAttribute('data-target');
+    const count = +counter.innerText;
+    const increment = target / 100;
+    if(count < target){
+      counter.innerText = Math.ceil(count + increment);
+      setTimeout(updateCount, 20);
+    }else{counter.innerText = target;}
+  }
+  updateCount();
+});
 </script>
 
 </body>
-      </html>
+  </html>
