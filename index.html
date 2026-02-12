@@ -1,16 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>David Mpongo | Développeur Web & Mobile - Startup</title>
-<meta name="description" content="David Mpongo, développeur web et mobile. Création de sites modernes, applications Android, solutions VPN et IA. Version Business / Startup.">
-<meta property="og:title" content="David Mpongo | Développeur Web & Mobile">
-<meta property="og:description" content="Portfolio professionnel, projets, services et solutions digitales.">
-<meta property="og:image" content="https://i.imgur.com/naY3qiQ.jpeg">
 
-<link rel="icon" href="https://i.imgur.com/naY3qiQ.jpeg">
+<meta name="description" content="David Mpongo, développeur web et mobile. Création de sites modernes, applications Android, solutions VPN et IA.">
+<meta name="keywords" content="David Mpongo, développeur RDC, site web, application Android, VPN, IA">
+
+<link rel="icon" href="https://i.ibb.co/bRRCSJ45/mysterious-hacker-figure-sitting-dark-260nw-2675788995.webp">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
@@ -33,136 +31,156 @@ body.light{
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 body{background:var(--bg);color:var(--text);transition:.3s;line-height:1.6;}
 a{text-decoration:none;color:inherit;}
-img{max-width:100%;display:block;}
 
-/* ===== HEADER HERO ===== */
+/* HEADER */
 header{
   padding:100px 20px 160px;
   background:linear-gradient(135deg,#003f5f,var(--accent));
   text-align:center;
   position:relative;
 }
-header h1{font-size:3rem;font-weight:700;opacity:0;animation:fadeInDown 1s forwards;}
-header p{margin-top:15px;color:#eaf6ff;font-size:1.2rem;max-width:600px;margin:auto;opacity:0;animation:fadeInDown 1s 0.3s forwards;}
-header .cta-btn{
-  margin-top:30px;
+header h1{font-size:3rem;}
+header p{margin-top:15px;color:#eaf6ff;font-size:1.2rem;}
+
+.cta-btn{
+  margin-top:25px;
   display:inline-flex;
   align-items:center;
   gap:10px;
-  background:#fff;color:var(--accent);
+  background:#fff;
+  color:var(--accent);
   padding:15px 30px;
   border-radius:12px;
   font-weight:700;
   transition:.3s;
-  opacity:0;
-  animation:fadeInDown 1s 0.6s forwards;
 }
-header .cta-btn:hover{transform:translateY(-3px);opacity:.9;}
-@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+.cta-btn:hover{transform:translateY(-3px);}
 
-.theme-toggle,.lang-toggle{
-  position:absolute;
-  top:25px;
-  background:none;
-  border:none;
-  color:#fff;
-  font-size:20px;
-  cursor:pointer;
+.status-badge{
+margin-top:15px;
+display:inline-block;
+padding:8px 18px;
+border-radius:30px;
+background:rgba(0,255,100,.1);
+color:#00ff88;
+font-weight:600;
+font-size:14px;
 }
-.theme-toggle{right:20px;}
-.lang-toggle{left:20px;}
 
-/* ===== PROFILE ===== */
+/* PROFILE */
 .profile{margin-top:-80px;text-align:center;}
-.profile img{width:160px;height:160px;border-radius:50%;border:5px solid var(--accent);background:#000;}
+.profile img{
+width:170px;
+height:170px;
+border-radius:50%;
+border:5px solid var(--accent);
+object-fit:cover;
+object-position:center;
+box-shadow:0 0 40px rgba(0,207,255,.8);
+}
 
-/* ===== CONTAINER ===== */
+/* CONTAINER */
 .container{max-width:1100px;margin:auto;padding:50px 20px;}
 .section-title{text-align:center;font-size:2rem;margin-bottom:40px;color:var(--accent);}
 
-/* ===== BUTTONS ===== */
+/* BUTTONS */
 .btn-container{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-  margin-bottom:60px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:60px;
 }
 .btn{
-  background:var(--btn);
-  color:#fff;
-  padding:16px;
-  border-radius:14px;
-  text-decoration:none;
-  font-weight:600;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  transition:.3s;
+background:var(--btn);
+color:#fff;
+padding:16px;
+border-radius:14px;
+font-weight:600;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+transition:.3s;
 }
-.btn:hover{transform:translateY(-4px);opacity:.9;}
+.btn:hover{transform:translateY(-4px);}
 
-/* ===== CARD ===== */
+/* CARD */
 .card{
-  background:var(--card);
-  padding:35px;
-  border-radius:20px;
-  margin-bottom:40px;
-  box-shadow:0 20px 40px rgba(0,0,0,.2);
+background:var(--card);
+padding:35px;
+border-radius:20px;
+margin-bottom:40px;
 }
 .card h2{margin-bottom:20px;color:var(--accent);}
 .card p{color:var(--muted);}
 
-/* ===== SKILLS ===== */
-.skill{margin:15px 0;}
-.skill span{font-weight:600;}
-.bar{background:#2a2f36;border-radius:30px;overflow:hidden;margin-top:8px;}
-.fill{height:12px;background:linear-gradient(90deg,var(--accent),#00ffaa);transition:width 1s;}
-
-/* ===== SERVICES / PROJETS / TESTIMONIALS ===== */
-.services,.projects,.testimonials{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:25px;
+/* GRID */
+.services{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
 }
-.service,.project,.testimonial{
-  background:var(--card);
-  padding:25px;
-  border-radius:18px;
-  text-align:center;
-  box-shadow:0 15px 30px rgba(0,0,0,.15);
-  transition:.3s;
+.service{
+background:var(--card);
+padding:25px;
+border-radius:18px;
+text-align:center;
+transition:.3s;
 }
-.service:hover,.project:hover,.testimonial:hover{transform:translateY(-5px);}
-.service i,.project i,.testimonial i{font-size:28px;color:var(--accent);margin-bottom:15px;}
+.service:hover{transform:translateY(-5px);}
+.service i{font-size:28px;color:var(--accent);margin-bottom:15px;}
 
-/* ===== STATISTICS ===== */
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  text-align:center;
-  gap:30px;
-  margin-top:30px;
+/* FORM */
+form{
+display:flex;
+flex-direction:column;
+gap:15px;
+margin-top:20px;
 }
-.counter{font-size:2rem;font-weight:bold;color:var(--accent);}
 
-/* ===== FORMS ===== */
-form input,form textarea,form button{
-  width:100%;
-  padding:14px;
-  margin-top:12px;
-  border:none;
-  border-radius:10px;
-  font-size:1em;
+form input,
+form textarea{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+padding:14px 18px;
+border-radius:12px;
+color:#fff;
+font-size:15px;
+transition:.3s;
 }
-form input,form textarea{background:#2c2f36;color:#fff;}
-body.light form input,body.light textarea{background:#eee;color:#000;}
-form button{background:var(--accent);font-weight:700;cursor:pointer;}
 
-/* ===== FOOTER ===== */
+body.light form input,
+body.light form textarea{
+background:#f1f1f1;
+color:#000;
+}
+
+form input:focus,
+form textarea:focus{
+outline:none;
+border-color:var(--accent);
+box-shadow:0 0 10px rgba(0,207,255,.4);
+}
+
+form button{
+background:linear-gradient(135deg,var(--accent),#00ffaa);
+border:none;
+padding:15px;
+border-radius:12px;
+font-weight:700;
+font-size:16px;
+cursor:pointer;
+transition:.3s;
+}
+
+form button:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(0,207,255,.4);
+}
+
+/* FOOTER */
 footer{text-align:center;padding:30px;background:#0a0d12;color:#777;font-size:.9rem;}
 
-/* ===== RESPONSIVE ===== */
 @media(max-width:600px){header h1{font-size:2rem;}}
 </style>
 </head>
@@ -170,95 +188,67 @@ footer{text-align:center;padding:30px;background:#0a0d12;color:#777;font-size:.9
 <body>
 
 <header>
-  <button class="lang-toggle"><i class="fas fa-language"></i></button>
-  <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
-  <h1>David Mpongo</h1>
-  <p>Développeur Web • Mobile • IA • VPN | Solutions professionnelles</p>
-  <a href="#contact" class="cta-btn"><i class="fas fa-envelope"></i> Contactez-moi</a>
-  
-  <a href="https://chat.whatsapp.com/KyzoGEXunBA7g2htNDjMPm" class="cta-btn"><i class="fas fa-envelope"></i> rejoindre la communauté</a>
+<h1>David Mpongo</h1>
+<p>Développeur Web • Mobile • IA • VPN | Solutions professionnelles</p>
+<div class="status-badge">🟢 Disponible de 9h à 18h</div>
+
+<br>
+
+<a href="#contact" class="cta-btn"><i class="fas fa-envelope"></i> Contact</a>
+<a href="https://chat.whatsapp.com/KyzoGEXunBA7g2htNDjMPm" class="cta-btn">
+<i class="fas fa-users"></i> Rejoindre la communauté
+</a>
 </header>
 <p>.</p>
 <p>.</p>
 <p>.</p>
 <p>.</p>
-
 <div class="profile">
-  <img src="https://i.imgur.com/naY3qiQ.jpeg" alt="David Mpongo">
+<img src="https://i.ibb.co/bRRCSJ45/mysterious-hacker-figure-sitting-dark-260nw-2675788995.webp" alt="David Mpongo">
 </div>
 
 <div class="container">
 
 <h2 class="section-title">Navigation rapide</h2>
+
 <div class="btn-container">
-  <a href="https://portfolio-david-mpongo-chi.vercel.app/" class="btn"><i class="fas fa-briefcase"></i> Portfolio</a>
-   <a href="https://davbot-premium.vercel.app/" class="btn"><i class="fas fa-download"></i> Télécharger APK</a>
-  <a href="https://davbot-vpn.vercel.app/" class="btn"><i class="fas fa-shield-alt"> VPN</i><i class="fas fa-cogs"></i> service </a>
-    <a href="https://davbot-bet.vercel.app/" class="btn"><i class="fas fa-briefcase"></i>Davbot bet</a>
-   
+<a href="https://portfolio-david-mpongo-chi.vercel.app/" class="btn">
+<i class="fas fa-briefcase"></i> Portfolio
+</a>
+
+<a href="https://davbot-premium.vercel.app/" class="btn">
+<i class="fas fa-download"></i> Télécharger APK
+</a>
+
+<a href="https://davbot-vpn.vercel.app/" class="btn">
+<i class="fas fa-shield-alt"></i> Service VPN
+</a>
+
+<a href="https://davbot-bet.vercel.app/" class="btn">
+<i class="fas fa-chart-line"></i> Investissement en ligne
+</a>
 </div>
 
 <div class="card">
 <h2>À propos</h2>
-<p>Je suis <strong>David Mpongo</strong>, développeur web et mobile basé en RDC. Je crée des sites modernes, applications Android, solutions VPN sécurisées et projets basés sur l’intelligence artificielle pour entreprises et startups.</p>
-</div>
-
-<div class="card">
-<h2>Compétences</h2>
-<div class="skill"><span>HTML / CSS</span><div class="bar"><div class="fill" style="width:90%"></div></div></div>
-<div class="skill"><span>JavaScript</span><div class="bar"><div class="fill" style="width:85%"></div></div></div>
-<div class="skill"><span>Android (APK)</span><div class="bar"><div class="fill" style="width:75%"></div></div></div>
-<div class="skill"><span>IA / API</span><div class="bar"><div class="fill" style="width:70%"></div></div></div>
-<div class="skill"><span>VPN / Réseaux</span><div class="bar"><div class="fill" style="width:85%"></div></div></div>
+<p>Je suis <strong>David Mpongo</strong>, développeur web et mobile basé en RDC.
+Je crée des sites modernes, applications Android, solutions VPN sécurisées,
+et projets IA pour entreprises et startups.</p>
 </div>
 
 <div class="card">
 <h2>Services</h2>
 <div class="services">
-  <div class="service"><i class="fas fa-globe"></i><p>Sites web modernes</p></div>
-  <div class="service"><i class="fab fa-android"></i><p>Applications Android</p></div>
-  <div class="service"><i class="fas fa-robot"></i><p>Solutions IA & API</p></div>
-  <div class="service"><i class="fas fa-shield-alt"></i><p>VPN & sécurité</p></div>
-</div>
-</div>
-
-<div class="card">
-<h2>Projets récents</h2>
-<div class="projects">
-  <div class="project"><i class="fas fa-laptop-code"></i><p>Portfolio Web</p></div>
-  <div class="project"><i class="fas fa-mobile-alt"></i><p>App Android DavBot</p></div>
-  <div class="project"><i class="fas fa-shield-alt"></i><p>VPN sécurisé</p></div>
-</div>
-</div>
-
-<div class="card">
-<h2>Témoignages</h2>
-<div class="testimonials">
-  <div class="testimonial"><i class="fas fa-quote-left"></i><p>"Travail sérieux et rapide, David a modernisé notre site."</p></div>
-  <div class="testimonial"><i class="fas fa-quote-left"></i><p>"Application Android fiable et intuitive, très satisfait."</p></div>
-</div>
-</div>
-
-<div class="card">
-<h2>Statistiques</h2>
-<div class="stats">
-  <div>
-    <div class="counter" data-target="28">0</div>
-    <p>Projets</p>
-  </div>
-  <div>
-    <div class="counter" data-target="17">0</div>
-    <p>Clients</p>
-  </div>
-  <div>
-    <div class="counter" data-target="500">0</div>
-    <p>Visiteurs</p>
-  </div>
+<div class="service"><i class="fas fa-globe"></i><p>Sites web modernes</p></div>
+<div class="service"><i class="fab fa-android"></i><p>Applications Android</p></div>
+<div class="service"><i class="fas fa-robot"></i><p>Solutions IA & API</p></div>
+<div class="service"><i class="fas fa-shield-alt"></i><p>VPN & Sécurité</p></div>
+<div class="service"><i class="fas fa-coins"></i><p>Investissement digital</p></div>
 </div>
 </div>
 
 <div class="card" id="contact">
-<h2>Contact / Consultation</h2>
+<h2>Contact</h2>
 <form onsubmit="sendWhatsApp(event)">
 <input id="nom" placeholder="Votre nom" required>
 <input id="email" type="email" placeholder="Votre email" required>
@@ -269,34 +259,17 @@ footer{text-align:center;padding:30px;background:#0a0d12;color:#777;font-size:.9
 
 </div>
 
-<footer>© 2026 David Mpongo — Développeur Web & Mobile | Version Business / Startup</footer>
+<footer>
+© 2026 David Mpongo — Développeur Web & Mobile
+</footer>
 
 <script>
-// Theme
-function toggleTheme(){document.body.classList.toggle("light");}
-
-// WhatsApp
 function sendWhatsApp(e){
-  e.preventDefault();
-  const txt=`Nom: ${nom.value}\nEmail: ${email.value}\nMessage: ${message.value}`;
-  window.open(`https://wa.me/243800182016?text=${encodeURIComponent(txt)}`);
+e.preventDefault();
+const txt=`Nom: ${nom.value}%0AEmail: ${email.value}%0AMessage: ${message.value}`;
+window.open(`https://wa.me/243800182016?text=${txt}`);
 }
-
-// Counter animation
-const counters = document.querySelectorAll('.counter');
-counters.forEach(counter => {
-  const updateCount = () => {
-    const target = +counter.getAttribute('data-target');
-    const count = +counter.innerText;
-    const increment = target / 100;
-    if(count < target){
-      counter.innerText = Math.ceil(count + increment);
-      setTimeout(updateCount, 20);
-    }else{counter.innerText = target;}
-  }
-  updateCount();
-});
 </script>
 
 </body>
-  </html>
+</html>
