@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Davbot Bet</title>
+<style>
+:root {
+  --bg: #050816;
+  --bg2: #0a0f25;
+  --card: #0f1e3d;
+  --accent: #4fc3f7;
+  --accent2: #7c3aed;
+  --neon1: #00e5ff;
+  --neon2: #9d4edd;
+  --shadow-neon: rgba(0, 229, 255, 0.7);
+}
+body {
+  margin:0;font-family:Arial,sans-serif;
+  background: radial-gradient(circle at 20% 20%, rgba(0,229,255,.08), transparent 40%),
+  radial-gradient(circle at 80% 70%, rgba(157,78,221,.08), transparent 40%),
+  linear-gradient(135deg,var(--bg),var(--bg2));
+  color:white;text-align:center;overflow-x:hidden;
+  animation:bgAnimation 20s ease-in-out infinite;
+  padding-bottom:50px;
+}
+@keyframes bgAnimation{
+0%{background:linear-gradient(135deg,var(--bg),var(--bg2));}
+50%{background:linear-gradient(135deg,var(--bg2),var(--bg));}
+100%{background:linear-gradient(135deg,var(--bg),var(--bg2));}
+}
+body::before{
+content:"";position:fixed;inset:-50%;
+background: radial-gradient(circle at 30% 30%, rgba(0,229,255,.15),transparent 40%),
+radial-gradient(circle at 70% 60%, rgba(157,78,221,.15),transparent 40%);
+animation:ambientGlow 14s ease-in-out infinite alternate;
+pointer-events:none;z-index:-1;
+}
+@keyframes ambientGlow{from{transform:scale(1) rotate(0deg);}to{transform:scale(1.2) rotate(20deg);}}
+nav{display:flex;justify-content:space-around;padding:15px 50px;
+background: rgba(16,31,74,.8);backdrop-filter:blur(10px);
+box-shadow:0 0 30px var(--shadow-neon);position:sticky;top:0;z-index:100;}
+nav a{color:white;text-decoration:none;font-weight:bold;text-shadow:0 0 15px var(--neon1);
+transition:all .3s ease;padding:10px 20px;font-size:1.1rem;}
+nav a:hover{text-shadow:0 0 25px var(--neon1),0 0 50px var(--neon2);transform:scale(1.1);}
+.container{max-width:600px;margin:40px auto;padding:20px;border-radius:20px;backdrop-filter:blur(8px);}
+.card{background:rgba(15,30,61,.7);padding:25px;border-radius:20px;margin-bottom:25px;
+border:1px solid rgba(79,195,247,.25);
+box-shadow:0 0 20px var(--neon1),0 0 60px var(--neon2);
+transition:all .35s ease;}
+.card:hover{transform:translateY(-4px) scale(1.02);
+box-shadow:0 0 35px var(--neon1),0 0 70px var(--neon2);}
+h2,h3{text-shadow:0 0 15px var(--neon1),0 0 30px var(--neon2);}
+input{width:85%;padding:12px;margin:8px 0;border:none;border-radius:12px;
+background:#08162d;color:white;text-align:center;outline:none;
+box-shadow:inset 0 0 12px var(--neon1),0 0 8px rgba(0,0,0,.4);}
+button{width:85%;padding:12px;margin:8px 0;border:none;border-radius:12px;
+background:linear-gradient(135deg,var(--accent),var(--accent2));
+color:white;font-weight:bold;cursor:pointer;transition:.3s;
+position:relative;overflow:hidden;
+box-shadow:0 0 15px var(--neon1),0 0 35px var(--neon2);}
+button:hover{transform:scale(1.06);
+box-shadow:0 0 25px var(--neon1),0 0 50px var(--neon2);}
+button::before{content:"";position:absolute;inset:-3px;
+background:linear-gradient(120deg,var(--neon1),var(--neon2),var(--neon1));
+opacity:.4;filter:blur(10px);animation:btnPulse 4s linear infinite;z-index:-1;}
+@keyframes btnPulse{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+button.whatsapp{background:linear-gradient(135deg,#25D366,#128C7E);
+box-shadow:0 0 20px rgba(37,211,102,.7);}
+#preview{width:110px;height:110px;border-radius:50%;object-fit:cover;
+border:3px solid var(--neon1);margin:10px auto;display:none;
+box-shadow:0 0 20px var(--neon1);position:relative;}
+.message{font-size:.95rem;opacity:.9;}
+.encourage{margin-top:10px;font-size:1rem;font-weight:bold;color:#ffd166;
+text-shadow:0 0 15px rgba(255,209,102,.8);}
+#vipStatus{margin-top:10px;font-weight:bold;
+text-shadow:0 0 15px var(--neon1),0 0 30px var(--neon2);}
+body::after{content:"";position:fixed;inset:0;
+background-image:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px);
+background-size:40px 40px;opacity:.15;pointer-events:none;
+animation:moveGrid 30s linear infinite;}
+@keyframes moveGrid{from{transform:translateY(0);}to{transform:translateY(-40px);}}
+.hide{display:none;}
+@media only screen and (max-width:768px){nav{flex-direction:column;padding:10px 25px;}
+.container{width:90%;padding:20px;}.card{padding:20px;}input,button{width:100%;padding:10px;}}
+@media only screen and (max-width:480px){h2,h3{font-size:1.5rem;}.card{padding:15px;}input,button{padding:8px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#">Accueil</a>
+  <a href="profil.html">Profil</a>
+  <a href="vip.html">VIP</a>
+  <a href="" id="logoutBtn">Déconnexion</a>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <h2>🤖 Bienvenue sur <span style="color:#4fc3f7">Davbot</span></h2>
+    <p class="message">Plateforme à jetons temporaires</p>
+  </div>
+
+  <div class="card" id="createCard">
+    <h3>💸 Créer un compte</h3>
+    <input id="name" placeholder="Nom complet">
+    <input id="password" type="password" placeholder="Mot de passe">
+    <input type="file" id="photoInput" accept="image/*">
+    <img id="preview">
+    <input id="token" placeholder="Jeton (ex: G3-DGUUIUIIIIU)">
+    <button id="createBtn">Créer le compte</button>
+    <p class="message">Pas de jeton ?</p>
+    <button class="whatsapp" onclick="requestToken()">📲 Demander un jeton</button>
+  </div>
+
+  <div class="card" id="loginCard">
+    <h3>🚀 Connexion</h3>
+    <input id="loginName" placeholder="Nom">
+    <input id="loginPassword" type="password" placeholder="Mot de passe">
+    <button onclick="login()">Se connecter</button>
+  </div>
+
+  <div class="card hide" id="welcomeCard">
+    <h2 id="userWelcome"></h2>
+    <img id="userPhoto" style="width:100px;height:100px;border-radius:50%;margin:10px 0;">
+    <p id="expireInfo" class="message"></p>
+    <p>🪙 Coins : <b id="coins"></b></p>
+    <p>💰 FC : <b id="fc"></b></p>
+    <p>🎟 Jeton : <b id="jetonType"></b></p>
+    <div id="vipStatus"></div>
+    <div id="encourageBox" class="encourage"></div>
+    <button onclick="go('taches.html')">🎮 Aller aux tâches</button>
+  </div>
+</div>
+
+<!-- Import token.js -->
+<script src="token.js"></script>
+
+<script>
+// ===== DAVBOT ECONOMY ENGINE v1 =====
+const ECONOMY = {
+coinValueFC: 10,
+probabilities:{ lose:0.55, small:0.30, big:0.10, jackpot:0.05 },
+multipliers:{ small:[2,6], big:[8,20], jackpot:[25,50] }
+};
+function randomBetween(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function rollOutcome(){ const r=Math.random();
+if(r<ECONOMY.probabilities.lose) return "lose";
+if(r<ECONOMY.probabilities.lose+ECONOMY.probabilities.small) return "small";
+if(r<ECONOMY.probabilities.lose+ECONOMY.probabilities.small+ECONOMY.probabilities.big) return "big";
+return "jackpot";}
+function computeReward(){ const outcome=rollOutcome(); let coins=0;
+if(outcome==="small") coins=randomBetween(...ECONOMY.multipliers.small);
+if(outcome==="big") coins=randomBetween(...ECONOMY.multipliers.big);
+if(outcome==="jackpot") coins=randomBetween(...ECONOMY.multipliers.jackpot);
+return { outcome, coins, fc: coins*ECONOMY.coinValueFC }; }
+function applyReward(user,reward){if(!user||!reward)return user;user.coins+=reward.coins;user.fc=user.coins*ECONOMY.coinValueFC;return user;}
+window.DavbotEconomy={ECONOMY,computeReward,applyReward};
+
+// ===== MAIN SCRIPT =====
+let usedTokens = JSON.parse(localStorage.getItem("usedTokens")) || [];
+let user = JSON.parse(localStorage.getItem("user"));
+
+const nameInput = document.getElementById("name");
+const passwordInput = document.getElementById("password");
+const tokenInput = document.getElementById("token");
+const photoInput = document.getElementById("photoInput");
+const preview = document.getElementById("preview");
+const createBtn = document.getElementById("createBtn");
+const createCard = document.getElementById("createCard");
+const welcomeCard = document.getElementById("welcomeCard");
+const loginCard = document.getElementById("loginCard");
+const userWelcome = document.getElementById("userWelcome");
+const coinsEl = document.getElementById("coins");
+const fcEl = document.getElementById("fc");
+const jetonTypeEl = document.getElementById("jetonType");
+const expireInfo = document.getElementById("expireInfo");
+const encourageBox = document.getElementById("encourageBox");
+const vipStatus = document.getElementById("vipStatus");
+const userPhoto = document.getElementById("userPhoto");
+const logoutBtn = document.getElementById("logoutBtn");
+
+photoInput.onchange = ()=>{
+  const file = photoInput.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => { preview.src=e.target.result; preview.style.display="block"; };
+  reader.readAsDataURL(file);
+};
+
+function updateDashboard(){ coinsEl.innerText=user.coins; fcEl.innerText=user.fc; }
+
+function showWelcome(){
+  createCard.classList.add("hide"); loginCard.classList.add("hide"); welcomeCard.classList.remove("hide");
+  userWelcome.innerText="👋 Bienvenue "+user.name;
+  userPhoto.src=user.photo||""; userPhoto.style.display=user.photo?"block":"none";
+  jetonTypeEl.innerText=user.activeToken;
+  const start=new Date(user.tokenStart); 
+  const expiry=new Date(start); 
+  expiry.setDate(expiry.getDate()+user.tokenDays);
+  expireInfo.innerText="⏳ Expire le : "+expiry.toLocaleString();
+  updateDashboard();
+  if(user.vipProgress?.unlocked){ vipStatus.innerHTML="💎 <b>STATUT VIP ACTIF</b>"; encourageBox.innerText="💎 VIP débloqué ! Profite des avantages !";}
+  else {vipStatus.innerHTML="🔒 VIP non débloqué"; encourageBox.innerText=`🔒 Progression VIP : P7 ${user.vipProgress.p7||0}/2, N7 ${user.vipProgress.n7||0}/4`;}
+}
+
+function login(){
+  const name=document.getElementById("loginName").value.trim();
+  const password=document.getElementById("loginPassword").value.trim();
+  if(!user) return alert("❌ Aucun compte trouvé");
+  if(user.name!==name||user.password!==password) return alert("❌ Identifiants incorrects");
+  if(new Date() >= new Date(new Date(user.tokenStart).setDate(new Date(user.tokenStart).getDate()+user.tokenDays))){
+    alert("⏰ Jeton expiré"); localStorage.removeItem("user"); location.reload(); return;
+  }
+  showWelcome();
+}
+
+createBtn.onclick = ()=>{
+  const name=nameInput.value.trim();
+  const password=passwordInput.value.trim();
+  const tokenStr=tokenInput.value.trim().toUpperCase();
+  if(!name||!password||!tokenStr||!preview.src) return alert("❌ Tous les champs sont requis");
+
+  const result = PlatformTokens.validatePlatformToken(tokenStr);
+  if(!result.valid) return alert("❌ Jeton invalide");
+  if(usedTokens.includes(tokenStr)) return alert("❌ Jeton déjà utilisé");
+
+  const start=new Date();
+  user={name,password,photo:preview.src,coins:0,
+        activeToken:result.type,tokenStart:start.toISOString(),
+        tokenDays:result.days,
+        vipProgress:{p7:0,n7:0,unlocked:false}};
+
+  if(result.type==="P7") user.vipProgress.p7++;
+  if(result.type==="N7") user.vipProgress.n7++;
+  if(user.vipProgress.p7>=2||user.vipProgress.n7>=4) user.vipProgress.unlocked=true;
+
+  usedTokens.push(tokenStr);
+  localStorage.setItem("usedTokens",JSON.stringify(usedTokens));
+  localStorage.setItem("user",JSON.stringify(user));
+  location.reload();
+};
+
+function requestToken(){ const msg=encodeURIComponent("Bonjour 👋\nJe demande un nouveau jeton."); window.open("https://wa.me/243800182016?text="+msg,"_blank"); }
+
+logoutBtn.onclick = ()=>{ if(confirm("Déconnexion ?")){ localStorage.removeItem("user"); location.reload(); } }
+
+function go(page){
+  if(!user) return alert("❌ Connexion requise");
+  if(!PlatformTokens.checkPageAccess(user.activeToken,page)) return alert("❌ Votre jeton n'autorise pas l'accès à cette page");
+  location.href=page;
+}
+
+// Auto-login si l'utilisateur existe
+if(user){
+  const expiryDate=new Date(new Date(user.tokenStart).setDate(new Date(user.tokenStart).getDate()+user.tokenDays));
+  if(new Date()>=expiryDate){ alert("⏰ Jeton expiré"); localStorage.removeItem("user"); location.reload(); }
+  else showWelcome();
+}
+setInterval(()=>{
+  if(user){
+    const expiryDate=new Date(new Date(user.tokenStart).setDate(new Date(user.tokenStart).getDate()+user.tokenDays));
+    if(new Date()>=expiryDate){ alert("⏰ Votre jeton a expiré !"); localStorage.removeItem("user"); location.reload(); }
+  }
+},10000);
+</script>
+</body>
+</html>de
