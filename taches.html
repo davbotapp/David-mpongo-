@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎯 Mes Tâches - Davbot</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:radial-gradient(circle at top,#020e1a,#000);
+  color:white;
+  min-height:100vh;
+}
+nav{
+  display:flex;
+  justify-content:space-around;
+  padding:15px;
+  background:rgba(16,31,74,.7);
+}
+nav a{
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+}
+.wrapper{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+.container{
+  width:95%;
+  max-width:520px;
+  background:rgba(10,20,40,.5);
+  padding:20px;
+  border-radius:18px;
+  text-align:center;
+}
+h1{
+  margin-bottom:10px;
+}
+.balance{
+  margin:10px 0;
+  font-size:1.3rem;
+  color:#ffd700;
+  font-weight:bold;
+}
+.task{
+  display:block;
+  margin:10px 0;
+  padding:14px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#4fc3f7,#1e88e5);
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  cursor:pointer;
+}
+.task.disabled{
+  background:gray;
+  cursor:not-allowed;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="accueil.html">Accueil</a>
+  <a href="taches.html">Tâches</a>
+  <a href="profil.html">Profil</a>
+  <a href="vip.html">VIP</a>
+  <a href="#" id="logoutBtn">Déconnexion</a>
+</nav>
+
+<div class="wrapper">
+<div class="container">
+
+<h1>🎯 Mes Tâches</h1>
+<div class="balance" id="balance">Coins : 0</div>
+
+<div class="tasks">
+  <a class="task" id="task1" href="1.html">🧠 Tâche 1</a>
+  <a class="task" id="task2" href="2.html">⚡ Tâche 2</a>
+  <a class="task" id="task3" href="3.html">☠️ Tâche 3</a>
+  <a class="task" id="task4" href="4.html">🔥 Tâche 4</a>
+</div>
+
+</div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+
+  let user = JSON.parse(localStorage.getItem("user"));
+
+  if(!user){
+    alert("Veuillez vous connecter");
+    location.href="accueil.html";
+    return;
+  }
+
+  user.coins = Number(user.coins || 0);
+
+  // 🔥 Affichage TOTAL combiné
+  document.getElementById("balance").innerText =
+    "Coins : " + user.coins;
+
+  // 🔐 Vérification jeton G3
+  if(user.activeToken !== "G3"){
+    document.querySelectorAll(".task").forEach(btn=>{
+      btn.classList.add("disabled");
+      btn.removeAttribute("href");
+      btn.onclick = ()=> alert("⛔ Seul le jeton G3 permet d'accéder aux tâches");
+    });
+  }
+
+  // Logout
+  document.getElementById("logoutBtn").onclick = ()=>{
+    if(confirm("Déconnexion ?")){
+      localStorage.removeItem("user");
+      location.href="accueil.html";
+    }
+  };
+
+});
+</script>
+
+</body>
+</html>
