@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIP | Davbot</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:radial-gradient(circle at 20% 20%, rgba(0,229,255,.08), transparent 40%),
+             radial-gradient(circle at 80% 70%, rgba(157,78,221,.08), transparent 40%),
+             linear-gradient(135deg,#050816,#0a0f25);
+  color:white;
+  text-align:center;
+  overflow-x:hidden;
+}
+nav{
+  display:flex;
+  justify-content:space-around;
+  padding:14px;
+  background:rgba(10,26,58,.7);
+  backdrop-filter:blur(10px);
+}
+nav a{
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  text-shadow:0 0 10px rgba(0,229,255,.8);
+}
+nav a:hover{
+  text-shadow:0 0 20px rgba(0,229,255,1),0 0 35px rgba(157,78,221,.8);
+}
+.container{
+  max-width:600px;
+  margin:30px auto;
+  padding:15px;
+  backdrop-filter:blur(6px);
+}
+.card{
+  background:rgba(15,30,61,.7);
+  border-radius:22px;
+  padding:24px;
+  margin-bottom:22px;
+  border:1px solid rgba(255,215,0,.25);
+  box-shadow:0 0 25px rgba(255,215,0,.2),
+             0 0 60px rgba(157,78,221,.15),
+             inset 0 0 15px rgba(255,255,255,.05);
+  transition:.35s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 40px rgba(255,215,0,.45),
+             0 0 80px rgba(157,78,221,.25);
+}
+h2{
+  color:#ffd700;
+  text-shadow:0 0 12px rgba(255,215,0,.9),0 0 30px rgba(255,152,0,.6);
+}
+.vip-badge{
+  font-size:1.3rem;
+  font-weight:bold;
+  color:#ffd700;
+  text-shadow:0 0 12px rgba(255,215,0,1),0 0 30px rgba(255,152,0,.7);
+}
+.level-btn{
+  display:block;
+  width:100%;
+  padding:16px;
+  margin:12px 0;
+  border:none;
+  border-radius:16px;
+  font-size:1rem;
+  font-weight:bold;
+  cursor:pointer;
+  background:linear-gradient(135deg,#ffd700,#ff9800);
+  color:black;
+  position:relative;
+  overflow:hidden;
+  transition:.3s;
+}
+.level-btn::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  background:linear-gradient(120deg,#00e5ff,#9d4edd,#00e5ff);
+  opacity:.35;
+  filter:blur(10px);
+  animation:btnPulse 6s linear infinite;
+  z-index:-1;
+}
+@keyframes btnPulse{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+.level-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 30px #ffd700,0 0 60px rgba(157,78,221,.7);
+}
+#vipStatus{
+  line-height:1.6;
+  font-weight:bold;
+  text-shadow:0 0 10px rgba(0,229,255,.7);
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size:40px 40px;
+  opacity:.15;
+  pointer-events:none;
+  animation:gridMove 35s linear infinite;
+}
+@keyframes gridMove{
+  from{transform:translateY(0);}
+  to{transform:translateY(-40px);}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="accueil.html">Accueil</a>
+  <a href="taches.html">Tâches</a>
+  <a href="profil.html">Profil</a>
+</nav>
+
+<div class="container">
+
+  <div class="card">
+    <h2>💎 Mode VIP</h2>
+    <p id="vipStatus"></p>
+  </div>
+
+  <div class="card" id="vipLevels" style="display:none;">
+    <button class="level-btn" onclick="goVip(1)">🎮 VIP 1</button>
+    <button class="level-btn" onclick="goVip(2)">🎮 VIP 2</button>
+    <button class="level-btn" onclick="goVip(3)">🎮 VIP 3</button>
+  </div>
+
+</div>
+<script>
+
+let user = JSON.parse(localStorage.getItem("user"));
+
+if(!user){
+  alert("Connexion requise");
+  location.href="accueil.html";
+}
+
+// Chargement données VIP
+let vipData = JSON.parse(localStorage.getItem("vipData")) || {
+  gUsed:0,
+  n3Used:0,
+  p7Used:0,
+  m30Used:0,
+  unlocked:false,
+  expiry:null
+};
+
+// Fonction reset VIP
+function resetVIP(){
+  vipData = {
+    gUsed:0,
+    n3Used:0,
+    p7Used:0,
+    m30Used:0,
+    unlocked:false,
+    expiry:null
+  };
+}
+
+// Vérification expiration
+if(user.tokenExpiry){
+  let now = new Date().getTime();
+  if(now > user.tokenExpiry){
+    user.activeToken = null;
+    user.vipTokenCounted = false;
+  }
+}
+
+// Comptage jetons (une seule fois)
+if(user.activeToken && !user.vipTokenCounted){
+
+  if(user.activeToken==="G3") vipData.gUsed++;
+  if(user.activeToken==="N3") vipData.n3Used++;
+  if(user.activeToken==="P7") vipData.p7Used++;
+  if(user.activeToken==="M30") vipData.m30Used++;
+
+  user.vipTokenCounted=true;
+}
+
+// Déblocage VIP
+if(
+  vipData.m30Used>=2 ||
+  vipData.p7Used>=4 ||
+  vipData.n3Used>=7 ||
+  vipData.gUsed>=5
+){
+  vipData.unlocked=true;
+
+  if(!vipData.expiry){
+    let exp = new Date();
+    exp.setDate(exp.getDate()+30); // VIP valable 30 jours
+    vipData.expiry = exp.getTime();
+  }
+}
+
+// Vérification expiration VIP
+if(vipData.expiry){
+  let now = new Date().getTime();
+  if(now > vipData.expiry){
+    resetVIP();
+  }
+}
+
+// Sauvegarde
+localStorage.setItem("vipData",JSON.stringify(vipData));
+localStorage.setItem("user",JSON.stringify(user));
+
+// Affichage
+const statusEl=document.getElementById("vipStatus");
+const levelsEl=document.getElementById("vipLevels");
+
+if(vipData.unlocked){
+
+  let remaining = Math.floor((vipData.expiry - new Date().getTime()) / (1000*60*60*24));
+
+  statusEl.innerHTML=
+    "✅ VIP débloqué<br>" +
+    "⏳ Expire dans : " + remaining + " jours";
+
+  levelsEl.style.display="block";
+
+}else{
+
+  statusEl.innerHTML=
+    "🔒 VIP verrouillé<br><br>Conditions :<br>" +
+    "• 2 jetons M30<br>" +
+    "• 4 jetons P7<br>" +
+    "• 7 jetons N3<br>" +
+    "• 5 jetons G3";
+
+}
+
+function goVip(n){
+  if(!vipData.unlocked){
+    alert("❌ VIP verrouillé");
+    return;
+  }
+  location.href="vip"+n+".html";
+}
+
+</script>
+</body>
+</html>
