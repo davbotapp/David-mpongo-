@@ -40,10 +40,10 @@ const G3 = {
 
 // ===== USER =====
 let user = JSON.parse(localStorage.getItem("user"));
-if(!user){ alert("Connexion requise"); location.href="index.html"; }
+if(!user){ alert("Connexion requise"); location.href="accueil.html"; }
 user.coins = Number(user.coins||0);
 
-// ===== DAILY TASK =====
+// ===== DAILY TASK ====
 const today = new Date().toDateString();
 let daily = JSON.parse(localStorage.getItem("dailyTasks"))||{date:today,tasks:{}};
 if(daily.date!==today) daily={date:today,tasks:{}};
