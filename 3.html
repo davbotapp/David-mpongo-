@@ -28,7 +28,7 @@ h1{color:#ff2bd6}
 
 <script>
 const G3={coinValue:10,probabilities:{lose:0.55,small:0.25,big:0.15,jackpot:0.05},rewards:{lose:0,small:50,big:340,jackpot:500},maxDailyCoins:500,maxDailyTries:1};
-let user=JSON.parse(localStorage.getItem("user"));if(!user){alert("Connexion requise");location.href="index.html"} user.coins=Number(user.coins||0);
+let user=JSON.parse(localStorage.getItem("user"));if(!user){alert("Connexion requise");location.href="accueil.html"} user.coins=Number(user.coins||0);
 const today=new Date().toDateString();
 let daily=JSON.parse(localStorage.getItem("dailyTasks"))||{date:today,tasks:{}}; if(daily.date!==today)daily={date:today,tasks:{}};
 const taskKey="task3"; if(!daily.tasks[taskKey])daily.tasks[taskKey]=0;if(daily.tasks[taskKey]>=G3.maxDailyTries){document.getElementById("msg").innerHTML="<span class='fail'>🔒 Déjà joué aujourd’hui</span>";throw"stop"}
