@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Tâche 4 – Slot Chance</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  margin:0;
+  background:linear-gradient(#050816,#000);
+  font-family:Arial,sans-serif;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.container{
+  background:#0b153f;
+  padding:20px;
+  border-radius:14px;
+  width:90%;
+  max-width:380px;
+  text-align:center;
+}
+.slots{
+  display:flex;
+  justify-content:space-between;
+  margin:25px 0;
+}
+.slot{
+  width:90px;
+  height:90px;
+  background:#020617;
+  border-radius:12px;
+  font-size:2rem;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+button{
+  background:#ffd166;
+  color:#000;
+  border:none;
+  padding:12px 20px;
+  font-size:1rem;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.result{margin-top:15px;font-size:1.1rem;}
+.success{color:#00ffb3}
+.fail{color:#ff6b6b}
+.note{font-size:.8rem;opacity:.8;margin-top:10px;}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🎰 Slot Chance</h1>
+
+  <div class="slots">
+    <div class="slot" id="s1">❔</div>
+    <div class="slot" id="s2">❔</div>
+    <div class="slot" id="s3">❔</div>
+  </div>
+
+  <button id="play">Jouer</button>
+
+  <div class="result" id="result"></div>
+  <div class="note">Probabilités globales du moteur</div>
+</div>
+
+<script>
+
+// ===== CONFIG G3 =====
+const G3 = {
+  coinValue: 10,
+  probabilities: {
+    lose: 0.50,
+    small: 0.30,
+    big: 0.12,
+    jackpot: 0.08
+  },
+  rewards: {
+    lose: 0,
+    small: 50,
+    big: 340,
+    jackpot: 500
+  },
+  maxDailyCoins: 500 // plafond G3
+};
+
+// ===== USER =====
+let user = JSON.parse(localStorage.getItem("user"));
+if(!user){
+  alert("Connexion requise");
+  location.href="accueil0.html";
+}
+
+user.coins = Number(user.coins || 0);
+
+// ===== DAILY LOCK =====
+const today = new Date().toDateString();
+let daily = JSON.parse(localStorage.getItem("dailyTasks")) || { date: today, tasks:{} };
+
+if(daily.date !== today){
+  daily = { date: today, tasks:{} };
+}
+
+if(daily.tasks.task4){
+  document.getElementById("result").innerHTML =
+    "<span class='fail'>🔒 Déjà joué aujourd’hui</span>";
+  document.getElementById("play").disabled = true;
+}
+
+// ===== SLOT LOGIC =====
+function roll(){
+  const r = Math.random();
+
+  if(r < G3.probabilities.lose) return "lose";
+  if(r < G3.probabilities.lose + G3.probabilities.small) return "small";
+  if(r < G3.probabilities.lose + G3.probabilities.small + G3.probabilities.big) return "big";
+  return "jackpot";
+}
+
+const slots = [
+  document.getElementById("s1"),
+  document.getElementById("s2"),
+  document.getElementById("s3")
+];
+
+const playBtn = document.getElementById("play");
+const resultBox = document.getElementById("result");
+
+playBtn.onclick = function(){
+
+  playBtn.disabled = true;
+
+  const outcome = roll();
+  const coinsWon = G3.rewards[outcome];
+
+  // Animation simple
+  if(coinsWon > 0){
+    slots.forEach(s => s.textContent = "⚡");
+  } else {
+    slots.forEach(s => s.textContent = "❌");
+  }
+
+  // Appliquer plafond G3
+  user.coins += coinsWon;
+
+  if(user.coins > G3.maxDailyCoins){
+    user.coins = G3.maxDailyCoins;
+  }
+
+  user.fc = user.coins * G3.coinValue;
+
+  localStorage.setItem("user", JSON.stringify(user));
+
+  daily.tasks.task4 = true;
+  localStorage.setItem("dailyTasks", JSON.stringify(daily));
+
+  // Résultat affichage
+  if(coinsWon > 0){
+    resultBox.innerHTML =
+      "<span class='success'>✔ +" + coinsWon + 
+      " coins (" + (coinsWon*10) + " FC)</span>";
+  } else {
+    resultBox.innerHTML =
+      "<span class='fail'>❌ Aucun gain</span>";
+  }
+
+  setTimeout(()=>{
+    location.href="taches.html";
+  },2000);
+
+};
+
+</script>
+
+</body>
+</html>
