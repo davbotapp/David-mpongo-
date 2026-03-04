@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tâche 2 – Duel IA</title>
+<style>
+body{margin:0;background:radial-gradient(circle at top,#1a0033,#000);font-family:Arial,sans-serif;color:white;display:flex;justify-content:center;align-items:center;height:100vh}
+.card{width:95%;max-width:500px;background:#140033;padding:30px;border-radius:20px;text-align:center;box-shadow:0 0 40px rgba(255,0,200,.4)}
+h2{color:#ff2bd6}
+button{margin:6px;padding:12px 15px;border:none;border-radius:10px;background:linear-gradient(135deg,#ff2bd6,#6a00ff);color:white;font-weight:bold;cursor:pointer}
+#result{margin-top:20px;font-weight:bold;font-size:1.1rem}.success{color:#00ffb3}.fail{color:#ff4d6d}.stats{margin-top:15px;font-size:.9rem;opacity:.8}.note{margin-top:10px;font-size:.8rem;opacity:.7}
+</style>
+</head>
+<body>
+<div class="card">
+<h2>🤖 Duel IA – Mode PRO</h2>
+<p>L’IA analyse ton choix…</p>
+<div id="choices"></div>
+<div id="result"></div>
+<div class="stats" id="stats"></div>
+<div class="note">Probabilités globales du moteur</div>
+</div>
+
+<script>
+// ===== CONFIG G3 =====
+const G3 = {
+  coinValue: 10,
+  probabilities:{lose:0.55,small:0.25,big:0.15,jackpot:0.05},
+  rewards:{lose:0,small:50,big:340,jackpot:500},
+  maxDailyCoins:500,maxDailyTries:1
+};
+
+// ===== USER =====
+let user=JSON.parse(localStorage.getItem("user"));
+if(!user){alert("Connexion requise"); location.href="index.html"} 
+user.coins=Number(user.coins||0);
+
+// ===== DAILY TASK =====
+const today=new Date().toDateString();
+let daily=JSON.parse(localStorage.getItem("dailyTasks"))||{date:today,tasks:{}};
+if(daily.date!==today) daily={date:today,tasks:{}};
+const taskKey="task2";
+if(!daily.tasks[taskKey]) daily.tasks[taskKey]=0;
+if(daily.tasks[taskKey]>=G3.maxDailyTries){document.getElementById("result").innerHTML="<span class='fail'>🔒 Déjà joué aujourd’hui</span>";throw"stop"}
+
+// ===== DUEL LOGIC =====
+function rollOutcome(){const r=Math.random();if(r<G3.probabilities.lose)return"lose";if(r<G3.probabilities.lose+G3.probabilities.small)return"small";if(r<G3.probabilities.lose+G3.probabilities.small+G3.probabilities.big)return"big";return"jackpot"}
+function computeReward(){const outcome=rollOutcome();const coins=G3.rewards[outcome];return{outcome,coins,fc:coins*G3.coinValue}}
+
+// ===== UI =====
+const choicesDiv=document.getElementById("choices"),resultDiv=document.getElementById("result");
+for(let i=1;i<=10;i++){const btn=document.createElement("button");btn.innerText=i;btn.onclick=()=>playRound();choicesDiv.appendChild(btn)}
+
+function playRound(){
+  choicesDiv.innerHTML="⏳ Analyse IA...";
+  const reward=computeReward();
+  user.coins+=reward.coins;
+  if(user.coins>G3.maxDailyCoins)user.coins=G3.maxDailyCoins;
+  user.fc=user.coins*G3.coinValue;
+  localStorage.setItem("user",JSON.stringify(user));
+  daily.tasks[taskKey]++;
+  localStorage.setItem("dailyTasks",JSON.stringify(daily));
+  setTimeout(()=>{
+    resultDiv.innerHTML=reward.coins>0?`<span class='success'>${reward.outcome.toUpperCase()} +${reward.coins} coins</span>`:"<span class='fail'>Perdu</span>";
+    setTimeout(()=>location.href="taches.html",2000);
+  },1000)
+}
+</script>
+</body>
+</html>
