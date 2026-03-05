@@ -3,108 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>P2 - Pack p7</title>
+<title>Produits - Jeton P7</title>
 
 <style>
 body{
-  font-family:Arial;
-  background:#000;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:radial-gradient(circle at top,#020e1a,#000);
   color:white;
+  min-height:100vh;
+}
+
+nav{
+  display:flex;
+  justify-content:space-around;
+  padding:15px;
+  background:rgba(16,31,74,.7);
+  backdrop-filter:blur(10px);
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.wrapper{
+  display:flex;
+  justify-content:center;
   padding:20px;
 }
-h2{
+
+.container{
+  width:95%;
+  max-width:650px;
+  background:rgba(10,20,40,.5);
+  padding:20px;
+  border-radius:18px;
+}
+
+h1{
   text-align:center;
+  margin-bottom:20px;
 }
-.file{
-  background:#1e88e5;
-  padding:15px;
-  margin-bottom:12px;
+
+/* fichier */
+
+.file-block{
+  background:rgba(15,30,61,.7);
   border-radius:12px;
+  padding:15px;
+  margin-bottom:15px;
+  border:1px solid #4fc3f7;
 }
-button{
-  padding:6px 10px;
+
+.file-title{
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.file-detail{
+  margin-bottom:10px;
+  color:#ffd700;
+}
+
+.file-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.btn{
+  padding:6px 12px;
   border:none;
   border-radius:8px;
   cursor:pointer;
-  margin-right:5px;
 }
+
 .copy{
   background:gold;
 }
+
 .view{
   background:#00e5ff;
 }
 
-.linkBox{
-  background:#111;
-  padding:10px;
-  margin-top:10px;
-  border-radius:8px;
-  word-break:break-all;
+.days-left{
+  font-weight:bold;
 }
+
 </style>
 </head>
 <body>
 
-<h2>📦 Pack P2 - 7 jours</h2>
+<nav>
+<a href="accueil.html">Accueil</a>
+<a href="produits.html">Produits</a>
+<a href="profil.html">Profil</a>
+<a href="#" id="logoutBtn">Déconnexion</a>
+</nav>
+
+<div class="wrapper">
+<div class="container">
+
+<h1>📦 Jeton P7 - 7 jours</h1>
+
 <div id="filesContainer"></div>
+
+</div>
+</div>
 
 <script src="config.js"></script>
 
 <script>
-
-// 🔐 Vérification connexion
-const user = JSON.parse(localStorage.getItem("user"));
-
+// 🔐 Connexion
+let user = JSON.parse(localStorage.getItem("user"));
 if(!user){
-  alert("Vous devez vous connecter !");
-  window.location.href = "accueil.html";
+  alert("Veuillez vous connecter");
+  location.href="accueil.html";
 }
 
-// =====================
-// AFFICHAGE PRODUIT
-// =====================
+// 🔐 Accès jeton
+if(user.activeToken !== "P7"){
+  alert("Vous n'avez pas accès à ce produit");
+  location.href="produits.html";
+}
 
-const tokenType = "P7";
-const container = document.getElementById("filesContainer");
+// Charger config
+const tokenData = PRODUCTS_CONFIG.tokens["P7"];
+if(!tokenData){
+  alert("Produit introuvable");
+  location.href="produits.html";
+}
 
-if(window.PRODUCTS_CONFIG && window.PRODUCTS_CONFIG.tokens[tokenType]){
-  const product = window.PRODUCTS_CONFIG.tokens[tokenType];
+// Calcul jours restants
+const startDate = new Date(user.tokenStart);
+const duration = tokenData.duration;
 
-  product.files.forEach(file=>{
-    const div = document.createElement("div");
-    div.className = "file";
-
-    div.innerHTML = `
-      <h4>${file.title}</h4>
-      <p>${file.detail}</p>
-
-      <button class="view" onclick="viewLink(this,'${file.link}')">Voir</button>
-      <button class="copy" onclick="copyLink('${file.link}')">Copier</button>
-
-      <div class="linkBox" style="display:none"></div>
-    `;
-
-    container.appendChild(div);
+function updateDaysLeft(){
+  const now = new Date();
+  const diffTime = now - startDate;
+  const diffDays = Math.ceil(duration - diffTime/(1000*60*60*24));
+  document.querySelectorAll(".days-left").forEach(el=>{
+    el.innerText = diffDays>0 ? diffDays + " jour(s) restant(s)" : "⏰ Expiré";
   });
-
-}else{
-  container.innerHTML = "<p>Produit introuvable</p>";
 }
 
-// 👁 Voir le fichier
-function viewLink(btn,link){
-  const box = btn.parentElement.querySelector(".linkBox");
-  box.style.display="block";
-  box.innerText = link;
-}
+// Affichage fichiers
+const container = document.getElementById("filesContainer");
+tokenData.files.forEach(file=>{
+  const div = document.createElement("div");
+  div.className = "file-block";
+  div.dataset.file = file.link;
+  div.innerHTML = `
+    <div class="file-title">${file.title}</div>
+    <div class="file-detail">${file.detail}</div>
+    <div class="file-actions">
+      <span class="days-left"></span>
+      <div>
+        <button class="btn view">Voir</button>
+        <button class="btn copy">Copier</button>
+      </div>
+    </div>
+  `;
+  container.appendChild(div);
+});
 
-// 📋 Copier
-function copyLink(link){
-  navigator.clipboard.writeText(link);
-  alert("Lien copié !");
-}
+// Bouton Voir
+document.querySelectorAll(".view").forEach(btn=>{
+  btn.addEventListener("click", e=>{
+    const link = e.target.closest(".file-block").dataset.file;
+    alert("Lien : " + link);
+  });
+});
 
+// Bouton Copier
+document.querySelectorAll(".copy").forEach(btn=>{
+  btn.addEventListener("click", e=>{
+    const link = e.target.closest(".file-block").dataset.file;
+    navigator.clipboard.writeText(link).then(()=>{ alert("Lien copié"); });
+  });
+});
+
+// Mise à jour jours restants
+updateDaysLeft();
+setInterval(updateDaysLeft, 1000*60*60);
+
+// Logout
+document.getElementById("logoutBtn").onclick=()=>{
+  if(confirm("Déconnexion ?")){
+    localStorage.removeItem("user");
+    location.href="accueil.html";
+  }
+};
 </script>
 
 </body>
