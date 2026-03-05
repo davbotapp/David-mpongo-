@@ -3,107 +3,252 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>P1 - Pack N3</title>
+<title>Produits - Jeton N3</title>
 
 <style>
 body{
-  font-family:Arial;
-  background:#000;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:radial-gradient(circle at top,#020e1a,#000);
   color:white;
+  min-height:100vh;
+}
+
+nav{
+  display:flex;
+  justify-content:space-around;
+  padding:15px;
+  background:rgba(16,31,74,.7);
+  backdrop-filter:blur(10px);
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.wrapper{
+  display:flex;
+  justify-content:center;
   padding:20px;
 }
-h2{
+
+.container{
+  width:95%;
+  max-width:650px;
+  background:rgba(10,20,40,.5);
+  padding:20px;
+  border-radius:18px;
+}
+
+h1{
   text-align:center;
+  margin-bottom:20px;
 }
-.file{
-  background:#1e88e5;
-  padding:15px;
-  margin-bottom:12px;
+
+/* fichier */
+
+.file-block{
+  background:rgba(15,30,61,.7);
   border-radius:12px;
+  padding:15px;
+  margin-bottom:15px;
+  border:1px solid #4fc3f7;
 }
-button{
-  padding:6px 10px;
+
+.file-title{
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.file-detail{
+  margin-bottom:10px;
+  color:#ffd700;
+}
+
+.file-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.btn{
+  padding:6px 12px;
   border:none;
   border-radius:8px;
   cursor:pointer;
-  margin-right:5px;
 }
+
 .copy{
   background:gold;
 }
+
 .view{
   background:#00e5ff;
 }
 
-.linkBox{
-  background:#111;
-  padding:10px;
-  margin-top:10px;
-  border-radius:8px;
-  word-break:break-all;
+.days-left{
+  font-weight:bold;
 }
+
 </style>
 </head>
 <body>
 
-<h2>📦 Pack N3 - 3 jours</h2>
+<nav>
+<a href="accueil.html">Accueil</a>
+<a href="produits.html">Produits</a>
+<a href="profil.html">Profil</a>
+<a href="#" id="logoutBtn">Déconnexion</a>
+</nav>
+
+<div class="wrapper">
+<div class="container">
+
+<h1>📦 Jeton N3 - 3 jours</h1>
+
 <div id="filesContainer"></div>
+
+</div>
+</div>
 
 <script src="config.js"></script>
 
 <script>
 
-// 🔐 Vérification connexion
-const user = JSON.parse(localStorage.getItem("user"));
+// 🔐 connexion
+let user = JSON.parse(localStorage.getItem("user"));
 
 if(!user){
-  alert("Vous devez vous connecter !");
-  window.location.href = "accueil.html";
+alert("Veuillez vous connecter");
+location.href="accueil.html";
 }
 
-// =====================
-// AFFICHAGE PRODUIT
-// =====================
+// 🔐 accès jeton
+if(user.activeToken !== "N3"){
+alert("Vous n'avez pas accès à ce produit");
+location.href="produits.html";
+}
 
-const tokenType = "N3";
+// charger config
+const tokenData = PRODUCTS_CONFIG.tokens["N3"];
+
+if(!tokenData){
+alert("Produit introuvable");
+location.href="produits.html";
+}
+
+// calcul jours
+const startDate = new Date(user.tokenStart);
+const duration = tokenData.duration;
+
+function updateDaysLeft(){
+
+const now = new Date();
+const diffTime = now - startDate;
+
+const diffDays = Math.ceil(duration - diffTime/(1000*60*60*24));
+
+document.querySelectorAll(".days-left").forEach(el=>{
+
+if(diffDays>0){
+el.innerText = diffDays + " jour(s) restant(s)";
+}else{
+el.innerText = "⏰ Expiré";
+}
+
+});
+
+}
+
+// afficher fichiers
+
 const container = document.getElementById("filesContainer");
 
-if(window.PRODUCTS_CONFIG && window.PRODUCTS_CONFIG.tokens[tokenType]){
-  const product = window.PRODUCTS_CONFIG.tokens[tokenType];
+tokenData.files.forEach(file=>{
 
-  product.files.forEach(file=>{
-    const div = document.createElement("div");
-    div.className = "file";
+const div = document.createElement("div");
 
-    div.innerHTML = `
-      <h4>${file.title}</h4>
-      <p>${file.detail}</p>
+div.className="file-block";
 
-      <button class="view" onclick="viewLink(this,'${file.link}')">Voir</button>
-      <button class="copy" onclick="copyLink('${file.link}')">Copier</button>
+div.dataset.file=file.link;
 
-      <div class="linkBox" style="display:none"></div>
-    `;
+div.innerHTML=`
 
-    container.appendChild(div);
-  });
+<div class="file-title">${file.title}</div>
 
-}else{
-  container.innerHTML = "<p>Produit introuvable</p>";
+<div class="file-detail">${file.detail}</div>
+
+<div class="file-actions">
+
+<span class="days-left"></span>
+
+<div>
+
+<button class="btn view">Voir</button>
+<button class="btn copy">Copier</button>
+
+</div>
+
+</div>
+
+`;
+
+container.appendChild(div);
+
+});
+
+// voir fichier
+
+document.querySelectorAll(".view").forEach(btn=>{
+
+btn.addEventListener("click",e=>{
+
+const link = e.target.closest(".file-block").dataset.file;
+
+alert("Lien : "+link);
+
+});
+
+});
+
+// copier lien
+
+document.querySelectorAll(".copy").forEach(btn=>{
+
+btn.addEventListener("click",e=>{
+
+const link = e.target.closest(".file-block").dataset.file;
+
+navigator.clipboard.writeText(link).then(()=>{
+
+alert("Lien copié");
+
+});
+
+});
+
+});
+
+// jours restants
+
+updateDaysLeft();
+setInterval(updateDaysLeft,1000*60*60);
+
+// logout
+
+document.getElementById("logoutBtn").onclick=()=>{
+
+if(confirm("Déconnexion ?")){
+
+localStorage.removeItem("user");
+
+location.href="accueil.html";
+
 }
 
-// 👁 Voir le fichier
-function viewLink(btn,link){
-  const box = btn.parentElement.querySelector(".linkBox");
-  box.style.display="block";
-  box.innerText = link;
-}
-
-// 📋 Copier
-function copyLink(link){
-  navigator.clipboard.writeText(link);
-  alert("Lien copié !");
-}
+};
 
 </script>
 
