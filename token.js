@@ -6,7 +6,7 @@ const PlatformTokens = (() => {
     G3: { days: 3, pageAccess: ["taches.html"] },
 
     // Produits
-    N3: { days: 3, pageAccess: ["p1.html"] },
+    N15: { days: 15, pageAccess: ["p1.html"] },
     P7: { days: 7, pageAccess: ["p3.html"] },
     M30: { days: 30, pageAccess: ["p3.html"] },
   };
@@ -15,11 +15,11 @@ const PlatformTokens = (() => {
   const activeTokens = [
     "N3-TDFNNFNFNFKGIGIGIGI",
     "N3-TDFOeufoydhd",
-    "P7-YRURURIIRIRI",
+    "P7-YRURURIIRIuRI",
     "P7-YAIDHNFKGHF",
-    "M30-XUCIVOHH9",
-    "M30-YFJFKHLHOH",
-    "G3-ODLHDDYHLXHOX",
+    "M30-XUCIVOH0H9",
+    "M30-YFJFKHLHOiH",
+    "G3-ODLHDDYHLXkHOX",
     "G3-3JNJJKILLLLO"
   ];
 
