@@ -89,7 +89,7 @@ animation:moveGrid 30s linear infinite;}
 <body>
 
 <nav>
-  <a href="#">Accueil</a>
+  <a href="produits.html">produits</a>
   <a href="profil.html">Profil</a>
   <a href="vip.html">VIP</a>
   <a href="" id="logoutBtn">Déconnexion</a>
@@ -201,7 +201,7 @@ function showWelcome(){
   expireInfo.innerText="⏳ Expire le : "+expiry.toLocaleString();
   updateDashboard();
   if(user.vipProgress?.unlocked){ vipStatus.innerHTML="💎 <b>STATUT VIP ACTIF</b>"; encourageBox.innerText="💎 VIP débloqué ! Profite des avantages !";}
-  else {vipStatus.innerHTML="🔒 VIP non débloqué"; encourageBox.innerText=`🔒 Progression VIP : P7 ${user.vipProgress.p7||0}/2, N7 ${user.vipProgress.n7||0}/4`;}
+  else {vipStatus.innerHTML="🔒 VIP non débloqué"; encourageBox.innerText=`🔒 Progression VIP : P7 ${user.vipProgress.p7||0}/2, N15 ${user.vipProgress.n15||0}/4`;}
 }
 
 function login(){
@@ -226,16 +226,21 @@ createBtn.onclick = ()=>{
   if(usedTokens.includes(tokenStr)) return alert("❌ Jeton déjà utilisé");
 
   const start=new Date();
+  
+  
+  
   user={name,password,photo:preview.src,coins:0,
-        activeToken:result.type,tokenStart:start.toISOString(),
-        tokenDays:result.days,
-        vipProgress:{p7:0,n7:0,unlocked:false}};
+      activeToken:result.type,tokenStart:start.toISOString(),
+      tokenDays:result.days,
+      vipProgress:{p7:0,n15:0,unlocked:false}};
 
-  if(result.type==="P7") user.vipProgress.p7++;
-  if(result.type==="N7") user.vipProgress.n7++;
-  if(user.vipProgress.p7>=2||user.vipProgress.n7>=4) user.vipProgress.unlocked=true;
+// progression VIP selon les jetons
+if(result.type==="P7") user.vipProgress.p7++;
+if(result.type==="N15") user.vipProgress.n15++;
 
-  usedTokens.push(tokenStr);
+// déblocage VIP
+if(user.vipProgress.p7>=2 || user.vipProgress.n15>=4) user.vipProgress.unlocked=true;
+usedTokens.push(tokenStr);
   localStorage.setItem("usedTokens",JSON.stringify(usedTokens));
   localStorage.setItem("user",JSON.stringify(user));
   location.reload();
@@ -265,4 +270,4 @@ setInterval(()=>{
 },10000);
 </script>
 </body>
-</html>de
+</html>
