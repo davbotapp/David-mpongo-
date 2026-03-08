@@ -6,9 +6,9 @@
 <title>Profil | Davbot</title>
 <style>
 :root{
---bg:#050816; --bg2:#0a0f25; --card:#0f1e3d;
---accent:#4fc3f7; --accent2:#7c3aed; --neon1:#00e5ff; --neon2:#9d4edd;
---gold:#ffd700;
+--bg:#050816; --bg2:#0a0f25;
+--card:#0f1e3d; --accent:#4fc3f7; --accent2:#7c3aed;
+--neon1:#00e5ff; --neon2:#9d4edd; --gold:#ffd700;
 }
 body{margin:0;font-family:Arial;background:linear-gradient(135deg,var(--bg),var(--bg2));color:white;text-align:center;}
 nav{display:flex;justify-content:space-around;padding:15px;background:#08162d;}
@@ -18,9 +18,7 @@ nav a{color:white;text-decoration:none;font-weight:bold;}
 #profilePic{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid #00e5ff;}
 .stat{background:#08162d;border-radius:12px;padding:12px;margin:8px 0;font-weight:bold;}
 .btn{width:100%;padding:14px;margin:8px 0;border:none;border-radius:12px;font-weight:bold;cursor:pointer;}
-.btn-task{background:#4fc3f7;}
-.btn-withdraw{background:#7c3aed;color:white;}
-.btn-logout{background:#ff4c4c;color:white;}
+.btn-task{background:#4fc3f7;} .btn-withdraw{background:#7c3aed;color:white;} .btn-logout{background:#ff4c4c;color:white;}
 .vipBadge{background:linear-gradient(135deg,#ffd700,#ff9800);padding:6px 12px;border-radius:10px;color:black;font-weight:bold;display:inline-block;margin-top:6px;}
 .progress{height:10px;background:#08162d;border-radius:10px;overflow:hidden;margin-top:8px;}
 .bar{height:100%;background:linear-gradient(90deg,#00e5ff,#9d4edd);width:0%;}
@@ -36,6 +34,8 @@ nav a{color:white;text-decoration:none;font-weight:bold;}
 </nav>
 
 <div class="container">
+
+<!-- PROFIL -->
 <div class="card">
 <img id="profilePic">
 <h2 id="userName"></h2>
@@ -43,6 +43,7 @@ nav a{color:white;text-decoration:none;font-weight:bold;}
 <p id="motivation"></p>
 </div>
 
+<!-- STATS -->
 <div class="card">
 <h3>📊 Statistiques</h3>
 <div class="stat">🪙 Coins : <span id="coins"></span></div>
@@ -53,6 +54,7 @@ nav a{color:white;text-decoration:none;font-weight:bold;}
 <div class="progress"><div class="bar" id="levelBar"></div></div>
 </div>
 
+<!-- ACTIONS -->
 <div class="card">
 <button class="btn btn-task" id="taskBtn">🎯 Faire les tâches</button>
 <button class="btn btn-withdraw" id="productBtn">🛒 Produits</button>
@@ -62,10 +64,8 @@ nav a{color:white;text-decoration:none;font-weight:bold;}
 </div>
 </div>
 
-<!-- QRCode.js -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
-
 <script>
+// Charger l'utilisateur
 let user = JSON.parse(localStorage.getItem("user"));
 if(!user){ alert("Connectez-vous"); location.href="index.html"; }
 user.coins = Number(user.coins||0);
@@ -82,33 +82,33 @@ document.getElementById("fidelite").innerText = Math.floor(user.pointsFidelite);
 
 // VIP
 if(user.vipProgress && user.vipProgress.unlocked){
-document.getElementById("vipBadgeContainer").innerHTML = "<div class='vipBadge'>💎 VIP</div>";
+  document.getElementById("vipBadgeContainer").innerHTML = "<div class='vipBadge'>💎 VIP</div>";
 }
 
 // MOTIVATION
 let messages=["🔥 Continue comme ça","🚀 Tu progresses","💪 Discipline gagnante","⚡ Objectif réussite"];
 document.getElementById("motivation").innerText = messages[Math.floor(Math.random()*messages.length)];
 
-// FIDELITE PAR HEURE
+// FIDELITE PAR HEURE 4->2->1
 function updateFidelite(){
-if(!user.lastFidelite){user.lastFidelite=Date.now(); user.fideliteHours=0;}
-let now=Date.now();
-let diff=now-user.lastFidelite;
-let hours=Math.floor(diff/(1000*60*60));
-if(hours>0){
-let gain=0;
-for(let i=0;i<hours;i++){
-if(user.fideliteHours===0) gain+=4;
-else if(user.fideliteHours===1) gain+=2;
-else gain+=1;
-user.fideliteHours++;
-}
-if(user.vipProgress && user.vipProgress.unlocked) gain*=2;
-user.pointsFidelite+=gain;
-user.lastFidelite=now;
-localStorage.setItem("user",JSON.stringify(user));
-}
-document.getElementById("fidelite").innerText=Math.floor(user.pointsFidelite);
+  if(!user.lastFidelite){user.lastFidelite=Date.now(); user.fideliteHours=0;}
+  let now=Date.now();
+  let diff=now-user.lastFidelite;
+  let hours=Math.floor(diff/(1000*60*60));
+  if(hours>0){
+    let gain=0;
+    for(let i=0;i<hours;i++){
+      if(user.fideliteHours===0) gain+=4;
+      else if(user.fideliteHours===1) gain+=2;
+      else gain+=1;
+      user.fideliteHours++;
+    }
+    if(user.vipProgress && user.vipProgress.unlocked) gain*=2;
+    user.pointsFidelite+=gain;
+    user.lastFidelite=now;
+    localStorage.setItem("user",JSON.stringify(user));
+  }
+  document.getElementById("fidelite").innerText=Math.floor(user.pointsFidelite);
 }
 updateFidelite();
 
@@ -120,60 +120,70 @@ document.getElementById("levelBar").style.width=progress+"%";
 
 // BONUS FC POUR 100 POINTS
 if(user.pointsFidelite>=100){
-let bonus=Math.floor(user.pointsFidelite/100);
-user.fc+=bonus*10;
-user.pointsFidelite-=bonus*100;
-alert("🎁 Bonus fidélité : "+(bonus*10)+" FC");
-localStorage.setItem("user",JSON.stringify(user));
+  let bonus=Math.floor(user.pointsFidelite/100);
+  user.fc+=bonus*10;
+  user.pointsFidelite-=bonus*100;
+  alert("🎁 Bonus fidélité : "+(bonus*10)+" FC");
+  localStorage.setItem("user",JSON.stringify(user));
 }
 
 // CONVERTIR POINTS → FC
 function convertPoints(){
-if(user.pointsFidelite<50){ alert("Minimum 50 points"); return; }
-let fc=Math.floor(user.pointsFidelite/50)*5;
-user.fc+=fc;
-user.pointsFidelite-=Math.floor(user.pointsFidelite/50)*50;
-localStorage.setItem("user",JSON.stringify(user));
-location.reload();
+  if(user.pointsFidelite<50){ alert("Minimum 50 points"); return; }
+  let fc=Math.floor(user.pointsFidelite/50)*5;
+  user.fc+=fc;
+  user.pointsFidelite-=Math.floor(user.pointsFidelite/50)*50;
+  localStorage.setItem("user",JSON.stringify(user));
+  location.reload();
 }
 
 // BOUTONS
 document.getElementById("taskBtn").onclick=()=>location.href="taches.html";
 document.getElementById("productBtn").onclick=()=>location.href="produits.html";
 
-// RETRAIT AVEC QR
-document.getElementById("withdrawBtn").onclick = async () => {
-const minFC = 500;
-if(user.fc < minFC){ alert(`❌ Minimum ${minFC} FC`); return; }
+// RETRAIT SANS QR
+document.getElementById("withdrawBtn").onclick = () => {
+  const minFC = 500;
 
-let montant = prompt("Montant à retirer :", minFC);
-montant = Number(montant);
-if(!montant || montant < minFC || montant > user.fc){ alert("Montant invalide"); return; }
+  if(user.fc < minFC){
+    alert(`❌ Minimum ${minFC} FC`);
+    return;
+  }
 
-// Diminuer FC
-user.fc -= montant;
-localStorage.setItem("user", JSON.stringify(user));
-document.getElementById("fc").innerText = user.fc;
+  let montant = prompt("Montant à retirer :", minFC);
+  montant = Number(montant);
 
-// Message QR
-const msg = `Retrait Davbot\nNom: ${user.name}\nCoins: ${user.coins}\nMontant: ${montant} FC\nJeton: ${user.activeToken}\nVIP: ${user.vipProgress?.unlocked?"Oui":"Non"}`;
+  if(!montant || montant < minFC || montant > user.fc){
+    alert("Montant invalide");
+    return;
+  }
 
-// Générer QR
-const canvas = document.createElement("canvas");
-await QRCode.toCanvas(canvas, msg);
-const dataURL = canvas.toDataURL("image/png");
+  // Diminuer FC
+  user.fc -= montant;
+  localStorage.setItem("user", JSON.stringify(user));
+  document.getElementById("fc").innerText = user.fc;
 
-// Ouvrir QR dans nouvelle fenêtre avec bouton WhatsApp
-const win = window.open();
-win.document.write(`<h2>QR Retrait : ${user.name}</h2>
-<img src="${dataURL}" style="width:250px;height:250px;"/>
-<br><button onclick="window.open('https://wa.me/243800182016?text=Demande%20de%20retrait%20-%20voir%20QR','_blank')">📲 Partager sur WhatsApp</button>`);
-win.document.title = `Retrait ${user.name}`;
-}
+  // Message texte WhatsApp
+  const msg = `Bonjour Davbot
+Nom: ${user.name}
+Coins: ${user.coins}
+Montant: ${montant} FC
+Jeton: ${user.activeToken}
+VIP: ${user.vipProgress?.unlocked ? "Oui" : "Non"}`;
+
+  // Ouvrir WhatsApp avec message texte
+  window.open("https://wa.me/243800182016?text=" + encodeURIComponent(msg), "_blank");
+
+  alert("✅ Demande de retrait envoyée sur WhatsApp !");
+};
 
 // LOGOUT
-function logout(){ if(confirm("Se déconnecter ?")){ localStorage.removeItem("user"); location.href="index.html"; } }
+function logout(){ 
+  if(confirm("Se déconnecter ?")){ 
+    localStorage.removeItem("user"); 
+    location.href="index.html"; 
+  } 
+}
 </script>
-
 </body>
 </html>
